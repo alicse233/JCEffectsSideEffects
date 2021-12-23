@@ -23,6 +23,29 @@ class MainActivity : ComponentActivity() {
             val scope = rememberCoroutineScope()
 
             Scaffold(scaffoldState = scaffoldState) {
+
+
+//              while making network requests use produce state
+
+
+                var counter = produceState(initialValue = 0) {
+                    kotlinx.coroutines.delay(3000)
+                    value = 4
+                }
+
+                if (counter.value % 5 == 0) {
+                    scope.launch {
+                        scaffoldState.snackbarHostState.showSnackbar("Hey man")
+                    }
+                }
+
+                Button(onClick = { /*TODO*/ }) {
+                    Text(text = "Click me ${counter.value}" )
+                }
+
+                return@Scaffold
+
+                //---------------------------normal code---------------------------//
                 var state by remember {
                     mutableStateOf(0)
                 }
